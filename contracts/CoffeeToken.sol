@@ -7,7 +7,7 @@ contract CoffeeToken {
     uint public totalSupply;
 
     // constructor
-    function CoffeeToken() public {
+    constructor() public {
         totalSupply = 1000000; // total tokens supply
     }
 
