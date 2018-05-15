@@ -9,6 +9,7 @@ contract CoffeeToken {
 
     string public name = "Coffee Token";
     string public symbol = "CFFE";
+    string public standard = "Coffee Token v1.0";
 
     // constructor
     constructor (uint _initialSupply) public {
