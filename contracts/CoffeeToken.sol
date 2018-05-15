@@ -6,6 +6,7 @@ contract CoffeeToken {
     // variables
     uint public totalSupply;
     mapping(address => uint) public balanceOf;
+    mapping(address => mapping(address => uint)) public allowance;
 
     string public name = "Coffee Token";
     string public symbol = "CFFE";
@@ -14,6 +15,12 @@ contract CoffeeToken {
     event Transfer(
         address indexed _from,
         address indexed _to,
+        uint _value
+    );
+
+    event Approve(
+        address indexed _owner,
+        address indexed _spender,
         uint _value
     );
 
@@ -37,6 +44,18 @@ contract CoffeeToken {
         emit Transfer(msg.sender, _to, _value);
 
         // return boolean value
+        return true;
+    }
+
+    // approve
+    function approve(address _spender, uint _value) public returns (bool success) {
+
+        // allowance
+        allowance[msg.sender][_spender] = _value;
+
+        // approve event
+        emit Approve(msg.sender, _spender, _value);
+
         return true;
     }
 }

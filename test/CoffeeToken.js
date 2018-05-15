@@ -63,4 +63,22 @@ contract("CoffeeToken", (accounts) => {
         let success = await tokenInstance.transfer.call(accounts[1], 250000, {from: accounts[0]});
         assert.equal(success, true);
     });
+
+
+    // delegated transfer
+    it('approves tokens for delegated transfer', async () => {
+        let success = await tokenInstance.approve.call(accounts[1], 100);
+        assert.equal(success, true);
+
+        // event approve and allowance
+        let approveEvent = await tokenInstance.approve(accounts[1], 100, {from: accounts[0]});
+        assert.equal(approveEvent.logs.length, 1);
+        assert.equal(approveEvent.logs[0].event, 'Approve');
+        assert.equal(approveEvent.logs[0].args._owner, accounts[0]);
+        assert.equal(approveEvent.logs[0].args._spender, accounts[1]);
+        assert.equal(approveEvent.logs[0].args._value, 100);
+
+        let allowance = await tokenInstance.allowance(accounts[0], accounts[1]);
+        assert.equal(allowance, 100);
+    });
 });
