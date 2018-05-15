@@ -29,4 +29,31 @@ contract("CoffeeToken", (accounts) => {
         assert.equal(symbol, "CFFE");
         assert.equal(standard, "Coffee Token v1.0");
     });
+
+    // check transfer exception
+    it("transfer token ownership exception", async () => {
+
+        // exception
+        try {
+            await tokenInstance.transfer.call(accounts[1], 999999, {from: accounts[0]});
+
+            assert(false);
+        }
+        catch(e) {
+            assert(e);
+        }
+    });
+
+    // check transfer valid
+    it("transfer token ownership valid", async () => {
+       try{
+            // valid transaction
+            await tokenInstance.transfer(accounts[1], 250000, {from: accounts[0]});
+            let balance = await tokenInstance.balanceOf(accounts[1]);
+            assert.equal(balance.toNumber(), 250000);
+       }
+       catch(e) {
+           assert(e);
+       }
+    });
 });
