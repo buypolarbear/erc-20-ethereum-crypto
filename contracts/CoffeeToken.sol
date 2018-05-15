@@ -6,9 +6,9 @@ contract CoffeeToken {
     // variables
     uint public totalSupply;
     mapping(address => uint) public balanceOf;
-    
+
     string public name = "Coffee Token";
-    string public symbol = "CFFT";
+    string public symbol = "CFFE";
 
     // constructor
     constructor (uint _initialSupply) public {

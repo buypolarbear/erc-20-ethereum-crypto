@@ -25,6 +25,6 @@ contract("CoffeeToken", (accounts) => {
         let symbol = await tokenInstance.symbol();
 
         assert.equal(name, "Coffee Token");
-        assert.equal(symbol, "CFFT");
+        assert.equal(symbol, "CFFE");
     });
 });
