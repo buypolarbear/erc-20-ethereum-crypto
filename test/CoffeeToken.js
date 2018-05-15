@@ -35,7 +35,7 @@ contract("CoffeeToken", (accounts) => {
 
         // exception
         try {
-            await tokenInstance.transfer.call(accounts[1], 999999, {from: accounts[0]});
+            await tokenInstance.transfer.call(accounts[1], 999999999, {from: accounts[0]});
 
             assert(false);
         }
@@ -46,14 +46,21 @@ contract("CoffeeToken", (accounts) => {
 
     // check transfer valid
     it("transfer token ownership valid", async () => {
-       try{
-            // valid transaction
-            await tokenInstance.transfer(accounts[1], 250000, {from: accounts[0]});
-            let balance = await tokenInstance.balanceOf(accounts[1]);
-            assert.equal(balance.toNumber(), 250000);
-       }
-       catch(e) {
-           assert(e);
-       }
+       
+        // execute transaction
+        let receipt = await tokenInstance.transfer(accounts[1], 250000, {from: accounts[0]});
+        let balance = await tokenInstance.balanceOf(accounts[1]);
+        assert.equal(balance.toNumber(), 250000);
+
+        // event transfer
+        assert.equal(receipt.logs.length, 1);
+        assert.equal(receipt.logs[0].event, 'Transfer');
+        assert.equal(receipt.logs[0].args._from, accounts[0]);
+        assert.equal(receipt.logs[0].args._to, accounts[1]);
+        assert.equal(receipt.logs[0].args._value, 250000);
+
+        // check return value
+        let success = await tokenInstance.transfer.call(accounts[1], 250000, {from: accounts[0]});
+        assert.equal(success, true);
     });
 });
