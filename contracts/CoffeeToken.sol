@@ -5,10 +5,15 @@ contract CoffeeToken {
 
     // variables
     uint public totalSupply;
+    mapping(address => uint) public balanceOf;
+    
+    string public name = "Coffee Token";
+    string public symbol = "CFFT";
 
     // constructor
-    constructor() public {
-        totalSupply = 1000000; // total tokens supply
+    constructor (uint _initialSupply) public {
+        totalSupply = _initialSupply; // total tokens supply
+        balanceOf[msg.sender] = totalSupply; // allocate the initial supply to an address
     }
 
     // set total number of tokens

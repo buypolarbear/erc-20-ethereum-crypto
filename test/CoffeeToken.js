@@ -21,10 +21,10 @@ contract("CoffeeToken", (accounts) => {
 
     // check for symbol and name
     it("initializes the contract with correct values", async () => {
-        let name = tokenInstance.name();
-        let symbol = tokenInstance.symbol();
+        let name = await tokenInstance.name();
+        let symbol = await tokenInstance.symbol();
 
-        assert.equal(name, 'Coffee Token');
-        assert.equal(symbol, 'CFFT');
+        assert.equal(name, "Coffee Token");
+        assert.equal(symbol, "CFFT");
     });
 });
