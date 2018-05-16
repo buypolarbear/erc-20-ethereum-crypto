@@ -1,5 +1,5 @@
-var CoffeeToken = artifacts.require("./CoffeeToken.sol");
-var CoffeeTokenSale = artifacts.require("./CoffeeTokenSale.sol");
+let CoffeeToken = artifacts.require("./CoffeeToken.sol");
+let CoffeeTokenSale = artifacts.require("./CoffeeTokenSale.sol");
 
 module.exports = function(deployer) {
   // set initial supply to 1 million

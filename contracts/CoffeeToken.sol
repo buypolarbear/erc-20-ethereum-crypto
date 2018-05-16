@@ -81,4 +81,9 @@ contract CoffeeToken {
         // return boolean value
         return true;
     }
+
+     // gets balance for address
+    function getBalance(address addr) public view returns (uint balance) {
+        return addr.balance;
+    }
 }

@@ -40,6 +40,18 @@ contract CoffeeTokenSale {
         emit Sell(msg.sender, _numberOfTokens);
     }
 
+    // ending token sale
+    function endSale() public {
+        // only admin can do this
+        require(msg.sender == admin);
+
+        // transfer remaining tokens to the admin
+        tokenContract.transfer(admin, tokenContract.balanceOf(this));
+
+        // destroy this contract
+        selfdestruct(admin);
+    }
+
     // multiply
     function multiply(uint x, uint y) internal pure returns (uint z) {
         require(y == 0 || (z = x * y) / y == x);

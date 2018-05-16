@@ -10,6 +10,7 @@ contract("CoffeeTokenSale", (accounts) => {
     let tokenPrice = 10000000000000; // in wei i.e 0.00001 ether
     let buyer = accounts[1];
     let tokensAvailable = 750000; // 75%
+    let numberOfTokens = 10;
 
     beforeEach(async () => {
         tokenSaleInstance = await CoffeeTokenSale.deployed();
@@ -28,7 +29,6 @@ contract("CoffeeTokenSale", (accounts) => {
 
     // token buy
     it("facilitates token buying", async () => {
-        let numberOfTokens = 10;
         let value = numberOfTokens * tokenPrice;
 
         // transfer 75% of tokens to token sale instance
@@ -65,5 +65,24 @@ contract("CoffeeTokenSale", (accounts) => {
         catch(e){
             assert(e);
         }
+    });
+
+
+    it("ends token sale", async () => {
+
+        // end token sale other than admin
+        try {
+            await tokenSaleInstance.endSale({from: buyer});
+            assert(false);
+        }
+        catch(e){
+            assert(e);
+        }
+
+        // transfer remaining tokens to admin
+        await tokenSaleInstance.buyTokens(numberOfTokens, {from: buyer, value: numberOfTokens * tokenPrice});
+        await tokenSaleInstance.endSale({from: admin});
+        let adminTokenBalance = await tokenInstance.balanceOf(admin);
+        assert.equal(adminTokenBalance.toNumber(), 999980);
     });
 });
