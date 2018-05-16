@@ -7,7 +7,7 @@ module.exports = function(deployer) {
     .deploy(CoffeeToken, 1000000)
     .then(function() {
              // deploy sale contract
-             let tokenPrice = 1000000000000000; // 0.01 ether
+             let tokenPrice = 10000000000000; // 0.00001 ether
              return deployer.deploy(CoffeeTokenSale, CoffeeToken.address, tokenPrice);
           });
 
