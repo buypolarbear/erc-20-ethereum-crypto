@@ -58,4 +58,27 @@ contract CoffeeToken {
 
         return true;
     }
+
+    // transferFrom
+    function transferFrom(address _from, address _to, uint _value) public returns (bool success) {
+        
+        // account has enough tokens
+        require(_value <= balanceOf[_from]);
+
+        // allowance is sufficient
+        require(_value <= allowance[_from][msg.sender]);
+
+        // change the balance
+        balanceOf[_to] += _value;
+        balanceOf[_from] -= _value;
+
+        // update the allowance
+        allowance[_from][msg.sender] -= _value;
+
+        // transfer event
+        emit Transfer(_from, _to, _value);
+
+        // return boolean value
+        return true;
+    }
 }

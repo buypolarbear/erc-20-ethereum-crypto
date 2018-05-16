@@ -81,4 +81,47 @@ contract("CoffeeToken", (accounts) => {
         let allowance = await tokenInstance.allowance(accounts[0], accounts[1]);
         assert.equal(allowance, 100);
     });
+
+    
+    it("handles delegated token transfers", async () => {
+        let fromAccount = accounts[2];
+        let toAccount = accounts[3];
+        let spendingAccount = accounts[4];
+
+        // transfer some tokens to fronAccount
+        await tokenInstance.transfer(fromAccount, 100, {from: accounts[0]});
+
+        // approve spendingAccount to spend 10 tokens from fromAccount
+        await tokenInstance.approve(spendingAccount, 10, {from: fromAccount});
+
+        // try transferring larger than available balance
+        try{
+            await tokenInstance.transferFrom(fromAccount, toAccount, 9999, {from: spendingAccount});
+            assert(false);
+        }
+        catch(e){
+            assert(e);
+        }
+
+        // try transferring larger than allowed balance
+        // allowed 10
+        try{
+            await tokenInstance.transferFrom(fromAccount, toAccount, 20, {from: spendingAccount});
+            assert(false);
+        }
+        catch(e){
+            assert(e);
+        }
+
+        // remaining allowance
+        await tokenInstance.transferFrom(fromAccount, toAccount, 5, {from: spendingAccount});
+        let remainingAllowance = await tokenInstance.allowance(fromAccount, spendingAccount);
+        assert.equal(remainingAllowance, 5)
+
+        // new balance
+        let toBalance = await tokenInstance.balanceOf(toAccount);
+        let fromBalance = await tokenInstance.balanceOf(fromAccount);
+        assert.equal(toBalance.toNumber(), 5);
+        assert.equal(fromBalance.toNumber(), 95);
+    });
 });
