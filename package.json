@@ -1,0 +1,26 @@
+{
+  "name": "erc-20-ethereum-crypto",
+  "version": "1.0.0",
+  "description": "Coffee Token Sale ICO",
+  "main": "truffle.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "lite-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sidharth0094/erc-20-ethereum-crypto.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sidharth0094/erc-20-ethereum-crypto/issues"
+  },
+  "homepage": "https://github.com/sidharth0094/erc-20-ethereum-crypto#readme",
+  "devDependencies": {
+    "lite-server": "^2.3.0"
+  }
+}
